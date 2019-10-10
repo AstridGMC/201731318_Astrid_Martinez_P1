@@ -8,6 +8,10 @@ body {
   font-family: 'Open Sans', sans-serif;
   color: #fff;
   line-height: 1.6;
+  margin-left:0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .img-responsive {
@@ -24,6 +28,13 @@ h1 {
   font-weight: normal;
   line-height: 3.5rem;
 }
+h2 {
+  text-shadow: 2px 2px 5px black;
+  font-size: 5rem;
+  line-height: 5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
 
 h3 {
   text-shadow: 2px 2px 5px black;
@@ -35,11 +46,12 @@ h3 {
 }
 
 .container {
+  display: flex;
   padding-top: 0px;
+  padding-left: 0px;
   margin: 0 auto;
   width: 100%;
   height: 400px;
-  display: flex;
   justify-content: center;
   align-items: center;
   background: url("../imagenes/fondo 1.png");
@@ -54,36 +66,87 @@ h3 {
   text-align: center;
 }
 
-
+.info{
+  padding-left: 300px;
+}
 
 nav {
   align-content: left;
   position : absolute;
+  height: 62px;
   left : 0;
   width : 100%;
-  background-color: black;
+  color: #fff;
+  background-color: rgb(150, 86, 110);
   }
   nav ul {
-  margin : 0 auto;
-  width : 940px;
-  list-style : none;
+    
+    list-style: none;
+    overflow: hidden; /* Limpiamos errores de float */  
+    margin : 0 auto;
   }
   nav ul li {
+    color: white;
   float : left;
   }
   nav ul li a {
   display : block;
   margin-right : 20px;
-  width : 140px;
-  font-size : 14px;
+  font-size : 18px;
+  font-weight: bolder;
   line-height : 44px;
   text-align : left;
   text-decoration : none;
-  color : #ccc;
+  color: white;
   }
-  nav ul li a:hover {
+ 
+nav {
+  color: #fff;
+  float: left; /* Desplazamos el nav hacia la izquierda */
+}
+ 
+nav ul {
+  color: #fff;
+  list-style: none;
+  overflow: hidden; /* Limpiamos errores de float */
+}
+ 
+nav ul li {
+  color: #fff;
+  float: left;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+ 
+nav ul li a {
+  display: block; /* Convertimos los elementos a en elementos bloque para manipular el padding */
+  padding: 10px;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+}
+ 
+nav ul li a:hover {
+  color: white;
+  background: #DB2175;
+}
+  nav ul li.selected {
   color : #fff;
   }
-  nav ul li.selected a {
-  color : #fff;
-  }}
+
+  ul.navbar-nav li.active {
+    background-color: red;
+}
+#botonAnalizar{
+  font-size: 50px;
+  align-self: auto;
+  margin-left: 45%;
+  margin-top: 60px;
+
+}
+
+#formularioArchivos{
+  text-align: center;
+  padding-left:20%;
+  display: block;
+  font-size: 50px;
+}

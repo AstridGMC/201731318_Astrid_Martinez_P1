@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <title>Subir mi Archivo</title>
+</head>
+
+<body style="background-color: #030F1B">
+    <% include bloque/header.html %>
+    <div>
+        <h1 style="font-size:90px; padding-top: 30px;">Insertar Archivo </h1>
+        <form  name="upload-form" action="upload" method="post" enctype="multipart/form-data">
+            <input id="formularioArchivos" type="file" name="miArchivo" id="archivo">
+            <button id="botonAnalizar"type="submit">Analizar</button>
+        </form>
+        <br />
+        <br />
+    </div>
+</body>
+
+
+</html>
