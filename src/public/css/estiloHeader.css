@@ -136,7 +136,8 @@ nav ul li a:hover {
   ul.navbar-nav li.active {
     background-color: red;
 }
-#botonAnalizar{
+
+.enviar{
   font-size: 50px;
   align-self: auto;
   margin-left: 45%;
@@ -149,4 +150,19 @@ nav ul li a:hover {
   padding-left:20%;
   display: block;
   font-size: 50px;
+}
+
+#textoPorLeer{
+  float: left;
+  background-color: rgba(163, 64, 163,0.50);
+  height: auto;
+  width: 50%;
+  
+}
+#textoLeido{
+  color: black;
+  float: right;
+  background-color:rgba(255, 255, 255, 0.60);
+  height: auto;
+  width: 50%;
 }

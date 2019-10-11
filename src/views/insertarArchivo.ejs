@@ -12,15 +12,76 @@
 <body style="background-color: #030F1B">
     <% include bloque/header.html %>
     <div>
-        <h1 style="font-size:90px; padding-top: 30px;">Insertar Archivo </h1>
-        <form  name="upload-form" action="upload" method="post" enctype="multipart/form-data">
-            <input id="formularioArchivos" type="file" name="miArchivo" id="archivo">
-            <button id="botonAnalizar"type="submit">Analizar</button>
-        </form>
-        <br />
-        <br />
-    </div>
-</body>
 
+        <h1 style="font-size:90px; padding-top: 30px;">Insertar Archivo </h1>
+
+        <form name="upload-form" action="http://localhost:3000/subirArchivo" method="post"
+            enctype="multipart/form-data">
+            <input id="formularioArchivos" type="file" name="file" accept=".txt" required>
+            <input type="text" value=lineas style="display: none">
+            <button id="enviar" class="enviar" type="submit" onclick="javascript: ocultar();">Eniviar</button>
+
+            <button style="display: none;" class="enviar" id="analizador">Analizar</button>
+        </form>
+        <div style="padding-top: 50px;">
+            <div id="textoPorLeer">
+                <h4>Contenido del archivo:</h3>
+                    <pre id="contenido-archivo"></pre>
+            </div>
+            <div id="textoLeido">
+                <h4>textoLeido</h3>
+            </div>
+            <br />
+            <br />
+
+        </div>
+    </div>
+    <script>
+
+        function ocultar() {
+            var archivos = document.getElementById('formularioArchivos');
+            var boton = document.getElementById('enviar');
+            var botonAnalizar = document.getElementById('analizador');
+            boton.style.display = 'none';
+            archivos.style.display = 'none';
+            botonAnalizar.style.display = 'block';
+
+        }
+
+        function leerArchivo(e) {
+            var archivo = e.target.files[0];
+            if (!archivo) {
+                return;
+            }
+            var i = 0
+            var lector = new FileReader();
+            lector.onload = function (e) {
+                var contenido = e.target.result;
+                mostrarContenido(contenido);
+                var lines = e.target.result.split('/n');
+                var line;
+                for (line = 0; line < lines.length; line++) {
+                    console.log(lines[line]);
+
+                }
+                var a = JSON.stringify(lines)
+                console.log('lineas string: ', a)
+
+                var parsed = JSON.parse(a)
+                console.log('Parsed lineas: ', parsed)
+
+            };
+            lector.readAsText(archivo); 
+        }
+
+        function mostrarContenido(contenido) {
+            var elemento = document.getElementById('contenido-archivo');
+            elemento.innerHTML = contenido;
+        }
+        document.getElementById('formularioArchivos')
+            .addEventListener('change', leerArchivo, false);
+
+    </script>
+</body>
 
 </html>
