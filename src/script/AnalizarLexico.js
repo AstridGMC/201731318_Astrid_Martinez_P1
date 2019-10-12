@@ -9,13 +9,13 @@ var tablaDeSimbolos = [
     //columna          0        1        2       3         4        5        6        7        8        9       10     11        12        13      14        15       16       17       18       19 
     //Lenguaje:       A-z      0-9      .        +         -        *        /        %        =       ==       <      >         <=        >=      (         )        {        }        "         ;
     /*eSTADOS;s3*/[  's3' , 's3'  , 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error'],
-    /*        s4*/['error','error', 'error',  'S4'  ,   'S4' ,  'S4'  ,  'S4'  ,   'S4' ,   'S4' ,   'S4' ,  'S4'  ,  'S4'  ,  'S4'  ,  'S4'  , 'error', 'error', 'error', 'error', 'error', 'error'],
+    /*        s4*/['error','error', 'error',  's4'  ,   's4' ,  's4'  ,  's4'  ,   's4' ,   's4' ,   's4' ,  's4'  ,  's4'  ,  's4'  ,  's4'  , 'error', 'error', 'error', 'error', 'error', 'error'],
     /*        s5*/['error','error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error',   's5' ,  's5'  ,  's5'  ,  's5'  , 'error', 'error'],
     /*        s6*/['error','error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error',  's6' ,   's6'  ],
     /*        s7*/['error', 's7'  ,  's8'  , 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error'],
     /*        s8*/['error', 's9'  , 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error'],
     /*        s9*/['error', 's9'  , 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error'],
-    /*eSTADOS;s0*/[  's3' , 's7'  , 'error',  'S4'  ,  'S4'  ,  'S4'  ,  'S4'  ,  'S4'  ,  'S4'  ,  'S4'  ,  'S4'  ,  'S4'  ,  'S4'  ,  'S4'  ,   's5' ,   's5' ,   's5' ,   's5' ,  's6'  ,   's6' ],
+    /*eSTADOS;s0*/[  's3' , 's7'  , 'error',  's4'  ,  's4'  ,  's4'  ,  's4'  ,  's4'  ,  's4'  ,  's4'  ,  's4'  ,  's4'  ,  's4'  ,  's4'  ,   's5' ,   's5' ,   's5' ,   's5' ,  's6'  ,   's6' ],
 ]
 
 
@@ -52,7 +52,7 @@ function reconocerOperadores(char) {
     var esOperador;
     for (var i = 0; i < operadores.length; i++) {
         if (operadores[i] == char) {
-            esOperador = i + 2;
+            esOperador = i + 3;
             return esOperador;
         } else {
             esOperador = 100;
@@ -202,24 +202,21 @@ function analizadorLexico(palabra) {
                     break;
 
                 case  's4':
-                    if (tablaDeSimbolos[1][reconocerEstados(char)] != 'error') {
                         actual = tablaDeSimbolos[1][reconocerEstados(char)];
                         console.log(actual);
-                    }
+                    
                     break;
 
                 case 's5':
-                    if (tablaDeSimbolos[2][reconocerEstados(char)] != 'error') {
                         actual = tablaDeSimbolos[2][reconocerEstados(char)];
                         console.log(actual);
-                    }
+                    
                     break;
 
                 case  's6':
-                    if (tablaDeSimbolos[3][reconocerEstados(char)] != 'error') {
                         actual = tablaDeSimbolos[3][reconocerEstados(char)];
                         console.log(actual);
-                    }
+                    
                     break;
 
                 case 's7':
@@ -230,17 +227,15 @@ function analizadorLexico(palabra) {
                     break;
 
                 case 's8':
-                    if (tablaDeSimbolos[5][reconocerEstados(char)] != 'error') {
                         actual = tablaDeSimbolos[5][reconocerEstados(char)];
                         console.log(actual);
-                    }
+                    
                     break;
 
                 case 's9':
-                    if (tablaDeSimbolos[6][reconocerEstados(char)] != 'error') {
                         actual = tablaDeSimbolos[6][reconocerEstados(char)];
                         console.log(actual);
-                    }
+                    
                     break;
 
                 case 'error':

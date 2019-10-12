@@ -63,7 +63,7 @@
                     </div>
                     <div>
                         <h5 scope="col">errores</h5>
-                        <ul id='error'>
+                        <ul id='mierror' style="color: red;">
                         </ul>
                     </div>
                     <div>
@@ -115,8 +115,8 @@
                         console.log(response.data.tipo);
                         addElemento(token);
                     }).
-                    catch(error => {
-                        console.log(error);
+                    catch(err => {
+                        console.log(err);
                     })
             };
 
@@ -160,9 +160,9 @@
                         ul.appendChild(createLi(respuesta));
                     }
                 } else if (tipo == "Error") {
-                    const ul = document.querySelector('#error');
+                    const ul = document.querySelector('#mierror');
                     if (respuesta) {
-                        li.appendChild(createLi(respuesta));
+                        ul.appendChild(createLi(respuesta));
                     }
                 } else if (tipo == "Float") {
                     const ul = document.querySelector('#numeroFlotante');
