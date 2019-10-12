@@ -2,7 +2,7 @@
 
 var operadores = ['+', '-', '*', '/', '%', '=', '==', '<', '>', '<=', '>=']
 var palabrasReservadas = ['variable', 'entero', 'decimal', 'booleano', 'cadena', 'si', 'sino', 'mientras', 'hacer'];
-var agrupadores = ['(', ')', '{', '}']
+var agrupadores = ['(', ')', '{' , '}']
 var signos = ['"', ";"]
 var booleanos = ["TRUE", "FALSE"]
 var tablaDeSimbolos = [
@@ -88,7 +88,7 @@ function reconocerAgrupadores(char) {
         if (char == agrupadores[i]) {
             pos = i + 14;
             return pos;
-        } else {
+        } else if (char != agrupadores[i]){
             return 100;
         }
     }
