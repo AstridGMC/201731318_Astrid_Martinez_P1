@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
-<body>
+<body style="background-color: #030F1B">
         <% include bloque/header.html %>
     <div>
 <form>
@@ -15,5 +15,7 @@
     <button type="submit"> Analizar</button>
 </form>
     </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </body>
 </html>

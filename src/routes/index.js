@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const fileUpload = require('express-fileupload')
+const fileUpload = require('express-fileupload');
+const formidable = require('formidable');
+
+router.use(express.json());
+
 miArchivo=" ";
 
 router.get('/',(req,res)=> {
@@ -18,15 +22,22 @@ router.get('/insertarArchivo',(req, res)=> {
 });
 
 
-router.use(fileUpload());
-router.post('/subirArchivo',(req,res)=>{
-    req.on('data', function(data) {
-        requestBody += data;
-        leerArchivo(miArchivo);
-        console.log(miArchivo.name());
-    });
 
+router.get('/token',(req, res)=> {
+  res.json({
+    tipo: 'id',
+    valor: 'valor'
+  });
 });
+
+router.post('/code',(req, res)=>{
+
+    console.log(req.body.codigo);
+    console.log('tam arreglo:'+req.body.ArregloLineas.length);
+    res.send('funciono');
+});
+
+
 
 router.get('/header',(req, res)=> {
     res.sendFile(path.join( __dirname,'../public/header.html'))
@@ -50,5 +61,6 @@ function leerArchivo(e) {
         }
     };
     lector.readAsText(archivo); 
+    
 }
 module.exports=router;

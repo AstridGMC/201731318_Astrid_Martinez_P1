@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -15,11 +16,10 @@
 
         <h1 style="font-size:90px; padding-top: 30px;">Insertar Archivo </h1>
 
-        <form name="upload-form" action="http://localhost:3000/subirArchivo" method="post"
-            enctype="multipart/form-data">
+        <form >
             <input id="formularioArchivos" type="file" name="file" accept=".txt" required>
             <input type="text" value=lineas style="display: none">
-            <button id="enviar" class="enviar" type="submit" onclick="javascript: ocultar();">Eniviar</button>
+            <button id="enviando" class="enviar" onclick="javascript: ocultar();">Eniviar</button>
 
             <button style="display: none;" class="enviar" id="analizador">Analizar</button>
         </form>
@@ -36,7 +36,36 @@
 
         </div>
     </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
+
+        var analizadorBtn = document.querySelector('#enviando');
+
+        function enviar(){
+            console.log(' funciona');
+            axios.post('http://localhost:3000/code',{
+                codigo: 'codigo de ejemplo',
+                ArregloLineas: misLineas
+            }).then(response => {
+                console.log(response);
+                
+            }).catch(error=>{
+                console.log(error);
+                
+            })
+        }
+
+        /*
+            axios.get('http://localhost:3000/token').
+            then(response => {
+                console.log(response.data);
+            }).
+            catch(error => {
+                console.log(error);
+            })
+        */
+
+        analizadorBtn.addEventListener('click',enviar);
 
         function ocultar() {
             var archivos = document.getElementById('formularioArchivos');
@@ -45,9 +74,9 @@
             boton.style.display = 'none';
             archivos.style.display = 'none';
             botonAnalizar.style.display = 'block';
-
         }
-
+        var tam=30;
+        var misLineas; 
         function leerArchivo(e) {
             var archivo = e.target.files[0];
             if (!archivo) {
@@ -58,20 +87,16 @@
             lector.onload = function (e) {
                 var contenido = e.target.result;
                 mostrarContenido(contenido);
-                var lines = e.target.result.split('/n');
-                var line;
-                for (line = 0; line < lines.length; line++) {
+
+                var lines = contenido.split("\n");
+                console.log(lines.length)
+                misLineas = lines;
+                for (var line=0; line < lines.length; line++) {
                     console.log(lines[line]);
-
+                    console.log(line);
                 }
-                var a = JSON.stringify(lines)
-                console.log('lineas string: ', a)
-
-                var parsed = JSON.parse(a)
-                console.log('Parsed lineas: ', parsed)
-
             };
-            lector.readAsText(archivo); 
+            lector.readAsText(archivo);
         }
 
         function mostrarContenido(contenido) {
