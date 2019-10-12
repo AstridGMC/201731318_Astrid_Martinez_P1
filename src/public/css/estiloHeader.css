@@ -14,7 +14,7 @@ body {
   margin-bottom: 0px;
 }
 
-.img-responsive {
+image.responsive {
   max-width: 100%;
   height: auto;
   display: block;
@@ -73,6 +73,7 @@ h3 {
 nav {
   align-content: left;
   position : absolute;
+  font-size: 30px;
   height: 62px;
   left : 0;
   width : 100%;
@@ -80,7 +81,6 @@ nav {
   background-color: rgb(150, 86, 110);
   }
   nav ul {
-    
     list-style: none;
     overflow: hidden; /* Limpiamos errores de float */  
     margin : 0 auto;
@@ -92,7 +92,7 @@ nav {
   nav ul li a {
   display : block;
   margin-right : 20px;
-  font-size : 18px;
+  font-size : 30px;
   font-weight: bolder;
   line-height : 44px;
   text-align : left;
@@ -115,7 +115,7 @@ nav ul li {
   color: #fff;
   float: left;
   font-family: Arial, sans-serif;
-  font-size: 16px;
+  font-size: 25px;
 }
  
 nav ul li a {
@@ -165,4 +165,23 @@ nav ul li a:hover {
   background-color:rgba(255, 255, 255, 0.60);
   height: auto;
   width: 50%;
+}
+.cardTitulo{
+  padding-left: 50px;
+  padding-top: 0px;
+  font-size: 5rem;
+  display: inline-block;
+}
+#textoPorLeer{
+  font-size: 30px;;
+}
+
+
+#cajaTexto{
+  margin-left: 35%;
+  align-self: auto;
+  height: 100PX;
+  font-size: 80px;
+  width: 600px;
+  display: block;
 }

@@ -1,66 +1,103 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const fileUpload = require('express-fileupload');
-const formidable = require('formidable');
+const automata = require('../script/AnalizarLexico')
 
+var arregloDeLineas;
+var palabra
+var palabraRecibida;
 router.use(express.json());
 
-miArchivo=" ";
 
-router.get('/',(req,res)=> {
-    res.render('Inicio',{mas:34})
-})
 
 //rutas
-router.get('/Inicio',(req, res)=> {
-    res.render(path.join( __dirname,'../views/index.ejs'))
+router.get('/Inicio', (req, res) => {
+  res.render(path.join(__dirname, '../views/index.ejs'))
 });
 
-router.get('/insertarArchivo',(req, res)=> {
-    res.render(path.join( __dirname,'../views/insertarArchivo.ejs'))
+router.get('/header', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/header.html'))
+});
+
+router.get('/insertarArchivo', (req, res) => {
+  res.render(path.join(__dirname, '../views/insertarArchivo.ejs'))
+});
+
+router.get('/insertarPalabra', (req, res) => {
+  res.render(path.join(__dirname, '../views/insertarPalabra.ejs'))
+}); 
+
+router.get('/Diagrama', (req, res) => {
+  res.render(path.join(__dirname, '../views/Diagrama.ejs'))
 });
 
 
+//metodos get y post 
+router.post('/code', (req, res) => {
 
-router.get('/token',(req, res)=> {
+  console.log(req.body.codigo);
+  console.log('tam arreglo:' + req.body.ArregloLineas.length);
+  arregloDeLineas = req.body.ArregloLineas;
+  res.send('funciono');
+});
+
+router.get('/recibirDatos', (req, res) => {
+
   res.json({
-    tipo: 'id',
-    valor: 'valor'
+    tipo: identificarTokenLinea(),
+    token: palabra
   });
-});
 
-router.post('/code',(req, res)=>{
+  console.log(palabra+"palabra enviada");
+  console.log(identificarTokenLinea());
 
-    console.log(req.body.codigo);
-    console.log('tam arreglo:'+req.body.ArregloLineas.length);
-    res.send('funciono');
 });
 
 
-
-router.get('/header',(req, res)=> {
-    res.sendFile(path.join( __dirname,'../public/header.html'))
+router.post('/EnviaToken', (req, res) => {
+  console.log('letra:' + req.body.textoEnviado);
+  palabraRecibida =  req.body.textoEnviado;
+  res.send('funciono');
 });
 
+router.get('/recibirTipo', (req, res) => {
 
-function leerArchivo(e) {
-    var archivo = e.target.files[0];
-    if (!archivo) {
-        return;
+  res.json({
+    tipo: identificarTokenTexto(),
+    token: palabraRecibida
+  });
+
+  console.log(palabraRecibida+"palabra enviada");
+  console.log(identificarTokenTexto());
+
+});
+
+var i = 0;
+var j = 0;
+//funciones
+function identificarTokenLinea() {
+
+  var palabras;
+  if (i < arregloDeLineas.length) {
+    var linea = arregloDeLineas[i];
+    palabras = linea.split(" ");
+    if (j < palabras.length) {
+      palabra = palabras[j];
+      j = j + 1;
+      console.log(palabras[j] + "    las palabras")
+      console.log(automata(palabras[j]));
+      return automata(palabras[j]);
+    } else if (j = palabras.length-1 ){
+      i = i + 1;
+      j=0;
+      console.log(i+"     palabra aumentada");
     }
-    var i = 0
-    var lector = new FileReader();
-    lector.onload = function (e) {
-        var contenido = e.target.result;
-        var lines = e.target.result.split('/n');
-        var line;
-        for (line = 0; line < lines.length; line++) {
-            console.log(lines[line]);
-
-        }
-    };
-    lector.readAsText(archivo); 
-    
+  }
 }
-module.exports=router;
+
+function identificarTokenTexto(){
+  console.log(palabraRecibida);
+  return automata(palabraRecibida);
+}
+
+module.exports = router;

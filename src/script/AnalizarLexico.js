@@ -15,6 +15,7 @@ var tablaDeSimbolos = [
     /*        s7*/['error', 's7'  ,  's8'  , 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error'],
     /*        s8*/['error', 's9'  , 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error'],
     /*        s9*/['error', 's9'  , 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error', 'error'],
+    /*eSTADOS;s0*/[  's3' , 's7'  , 'error',  'S4'  ,  'S4'  ,  'S4'  ,  'S4'  ,  'S4'  ,  'S4'  ,  'S4'  ,  'S4'  ,  'S4'  ,  'S4'  ,  'S4'  ,   's5' ,   's5' ,   's5' ,   's5' ,  's6'  ,   's6' ],
 ]
 
 
@@ -24,12 +25,14 @@ function reconocerPalabraReservada(palabra) {
     var palabraRes;
     for (var i = 0; i < palabrasReservadas.length; i++) {
         if (palabrasReservadas[i] == palabra) {
-            breake;
+            console.log(palabrasReservadas[i]+ " ESTA ES LA PALABRA")
             palabraRes = 21;
+            break; 
         } else {
-            palabraRes = 0;
+            palabraRes = 100;
         }
     }
+    console.log(palabraRes);
     return palabraRes;
 }
 
@@ -40,7 +43,7 @@ function reconocerBooleano(palabra) {
             esBooleano = 22;
             breake;
         } else {
-            esBooleano = 0;
+            esBooleano = 100;
         }
     }
     return esBooleano;
@@ -58,10 +61,9 @@ function reconocerOperadores(char) {
     return esOperador;
 }
 function reconocerLetra(char) {
-    if ((char) => {
-        let ascii = caracter.toUpperCase().charCodeAt(0);
-        return ascii > 64 && ascii < 91;
-    }) {
+    let ascii = char.toUpperCase().charCodeAt(0);
+        console.log(ascii);
+    if (ascii > 64 && ascii < 91) {
         return 0;
     } else {
         return 100;
@@ -71,7 +73,7 @@ function reconocerLetra(char) {
 function reconocerSimboolo(char) {
     var pos;
     for (var i = 0; i < signos.length; i++) {
-        if (char == Simbolos[i]) {
+        if (char == signos[i]) {
             pos = i + 18;
             return pos;
         } else {
@@ -93,43 +95,53 @@ function reconocerAgrupadores(char) {
 }
 
 function reconocerNumero(char) {
-    if (!isNaN(char)) {
-        return 1;
+    if (isNaN(char)) {
+        return 100;
     } else {
+        return 1;
+    }
+}
+function reconocerPunto(char) {
+    if (char == '.') {
+        return 2;
+    } else if (char != '.') {
         return 100;
     }
 }
 
 function reconocerEstadosPrimeros(palabra) {
-    if (reconocerPalabraReservada(palabra) != 0) {
+    if (reconocerPalabraReservada(palabra) != 100) {
         return 's1';
-    } else if (reconocerBooleano(palabra) != 0) {
+    } else if (reconocerBooleano(palabra) != 100) {
         return 's2';
     } else {
         return INICIO;
     }
 }
-function reconcerEstados(char, estActual) {
-    if (reconocerLetra(char) != 0) {
-        return 's3';
-    } else if (reconocerNumero(char) != 0) {
+function reconocerEstados(char) {
+    if (reconocerNumero(char) != 100) {
 
         return reconocerNumero(char);
 
-    } else if (reconocerAgrupadores(char) != 0) {
+    } else if (reconocerAgrupadores(char) != 100) {
 
         return reconocerAgrupadores(char);
 
-    } else if (reconocerOperadores(char) != 0) {
+    } else if (reconocerOperadores(char) != 100) {
 
         return reconocerOperadores(char);
 
-    } else if (reconocerSimboolo(char) != 0) {
+    } else if (reconocerSimboolo(char) != 100) {
 
         return reconocerSimboolo(char);
 
-    } else {
-        return 100
+    } else if (reconocerLetra(char) != 100) {
+        return reconocerLetra(char);
+
+    } else if(reconocerPunto(char)!=100){
+        return reconocerPunto(char);
+    }else{
+        return 100;
     }
 }
 
@@ -158,105 +170,127 @@ function reconcerEstadosNoo(char, estActual) {
 }
 
 var Estado;
-var INICIO = s0;
+var INICIO = 's0';
 var actual;
+var estadoFinal;
 
 function analizadorLexico(palabra) {
     cadenaRechazada = false;
     miPalabra = String(palabra);
+    actual= INICIO;
+    console.log(palabra)
+    console.log(miPalabra.length);
     var posicion = 0;
     if (reconocerEstadosPrimeros(palabra) == INICIO) {
-        while (!cadenaRechazada || posicion < miPalabra.length) {
+        while (posicion < miPalabra.length) {
             var char = miPalabra.charAt(posicion);
             console.log(char);
+
             switch (actual) {
-                case Estado = INICIO:
-                    actual = reconocerEstados(char)
-                    actual = Estado;
+
+                case 's0':
+                    console.log(reconocerEstados(char) + "   numero  estsado");
+                    actual = tablaDeSimbolos[7][reconocerEstados(char)];
+                    console.log(actual + "estado Actual");
                     break;
-                case Estado = 's3':
+
+                case 's3':
                     if (tablaDeSimbolos[0][reconocerEstados(char)] != 'error') {
                         actual = tablaDeSimbolos[0][reconocerEstados(char)];
-                        actual = Estado;
+                        console.log(actual);
                     }
                     break;
-                case Estado = 's4':
-                    if (tablaDeSimbolos[0][reconocerEstados(char)] != 'error') {
+
+                case  's4':
+                    if (tablaDeSimbolos[1][reconocerEstados(char)] != 'error') {
                         actual = tablaDeSimbolos[1][reconocerEstados(char)];
-                        actual = Estado;
+                        console.log(actual);
                     }
                     break;
-                case Estado = 's5':
-                    if (tablaDeSimbolos[0][reconocerEstados(char)] != 'error') {
+
+                case 's5':
+                    if (tablaDeSimbolos[2][reconocerEstados(char)] != 'error') {
                         actual = tablaDeSimbolos[2][reconocerEstados(char)];
-                        actual = Estado;
+                        console.log(actual);
                     }
                     break;
-                case Estado = 's6':
-                    if (tablaDeSimbolos[0][reconocerEstados(char)] != 'error') {
+
+                case  's6':
+                    if (tablaDeSimbolos[3][reconocerEstados(char)] != 'error') {
                         actual = tablaDeSimbolos[3][reconocerEstados(char)];
-                        actual = Estado;
+                        console.log(actual);
                     }
                     break;
-                case Estado = 's7':
-                    if (tablaDeSimbolos[0][reconocerEstados(char)] != 'error') {
+
+                case 's7':
+                        console.log("estado s7 "+ reconocerEstados(char));
                         actual = tablaDeSimbolos[4][reconocerEstados(char)];
-                        actual = Estado;
-                    }
+                        console.log(actual);
+                    
                     break;
-                case Estado = 's8':
-                    if (tablaDeSimbolos[0][reconocerEstados(char)] != 'error') {
+
+                case 's8':
+                    if (tablaDeSimbolos[5][reconocerEstados(char)] != 'error') {
                         actual = tablaDeSimbolos[5][reconocerEstados(char)];
-                        actual = Estado;
+                        console.log(actual);
                     }
                     break;
-                case Estado = 's9':
-                    if (tablaDeSimbolos[0][reconocerEstados(char)] != 'error') {
+
+                case 's9':
+                    if (tablaDeSimbolos[6][reconocerEstados(char)] != 'error') {
                         actual = tablaDeSimbolos[6][reconocerEstados(char)];
-                        actual = Estado;
+                        console.log(actual);
                     }
                     break;
-                case Estado = 'error':
+
+                case 'error':
                         cadenaRechazada = true;
+                        actual= 's0';
+                        console.log(actual);
                     break;
             }
+            posicion= posicion+1;
+            if(cadenaRechazada==true){
+                break;
+            }
+            
         }
-    } else {
-        Estado = reconocerEstadosPrimeros(palabra);
+    } else if (reconocerEstadosPrimeros(palabra) != INICIO) {
+        actual = reconocerEstadosPrimeros(palabra);
     }
-
-    return Estado;
+    console.log("esta Retorando"+ actual);
+    esEstado = NombrarEstados(actual);
 }
-
-
-function NombrarEstados(estadoFinal){
-    if(estadoFinal = 's1'){
-        return 'Palabra Reservada'
-    }else if(estadoFinal=='s2'){
+var esEstado; 
+function NombrarEstados(actual){
+    console.log(actual + "final");
+    if(actual == 's1'){
+        return 'Palabra Reservada';
+    }else if(actual=='s2'){
         return 'Boolean';
-    }else if(estadoFinal=='s3'){
-        return 'Identificador'
-    }else if(estadoFinal=='s4'){
-        return 'Operador'
-    }else if(estadoFinal=='s5'){
+    }else if(actual=='s3'){
+        return 'Identificador';
+    }else if(actual=='s4'){
+        return 'Operador';
+    }else if(actual=='s5'){
         return 'Agrupador'
-    }else if(estadoFinal=='s6'){
+    }else if(actual=='s6'){
         return 'Signo'
-    }else if(estadoFinal=='s7'){
+    }else if(actual=='s7'){
         return 'Entero'
-    }else if(estadoFinal=='s8'){
+    }else if(actual=='s8'){
         return 'Error'
-    }else if(estadoFinal=='s9'){
+    }else if(actual=='s9'){
         return 'Float'
-    }else if(estadoFinal=='s0'){
+    }else if(actual=='s0'){
         return 'Error'
     }
 }
-
+var est;
 var automata = function automataCompleto(palabra){
-    NombrarEstados(analizadorLexico(palabra));
+    analizadorLexico(palabra);
+    console.log(esEstado);
+    return esEstado;
 }
 
 module.exports = automata ;
-
-
