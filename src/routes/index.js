@@ -88,8 +88,8 @@ function identificarTokenLinea() {
       console.log(automata(palabras[j]));
       return automata(palabras[j]);
     } else if (j = palabras.length-1 ){
+      j=j*0;
       i = i + 1;
-      j=0;
       console.log(i+"     palabra aumentada");
     }
   }
